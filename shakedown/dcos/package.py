@@ -51,7 +51,8 @@ def install_package(
         options_json=None,
         wait_for_completion=False,
         timeout_sec=600,
-        expected_running_tasks=0
+        expected_running_tasks=0,
+        wait_for_marathon_deployment=True
 ):
     """ Install a package via the DC/OS library
 
@@ -69,8 +70,12 @@ def install_package(
         :type wait_for_completion: bool
         :param timeout_sec: number of seconds to wait for task completion
         :type timeout_sec: int
-        :param expected_running_tasks: number of service tasks to check for, or zero to disable
+        :param expected_running_tasks: if wait_for_completion, number of
+            service tasks to wait for, or zero to disable
         :type expected_task_count: int
+        :param wait_for_marathon_deployment: if wait_for_completion, wait
+            until all marathon deployments are complete
+        :type wait_for_marathon_deployment: bool
 
         :return: True if installation was successful, False otherwise
         :rtype: bool
@@ -124,8 +129,9 @@ def install_package(
         if expected_running_tasks > 0 and service_name is not None:
             wait_for_service_tasks_running(service_name, expected_running_tasks, timeout_sec)
 
-        app_id = pkg.marathon_json(options).get('id')
-        shakedown.deployment_wait(timeout_sec, app_id)
+        if wait_for_marathon_deployment:
+            app_id = pkg.marathon_json(options).get('id')
+            shakedown.deployment_wait(timeout_sec, app_id)
         print('\n{}install completed after {}\n'.format(
             shakedown.cli.helpers.fchr('>>'), pretty_duration(time.time() - start)))
     else:
