@@ -32,6 +32,14 @@ def read_config(args):
     return args
 
 
+def get_cluster_environment():
+    return {
+        'DC/OS': shakedown.dcos_version(),
+        'docker': shakedown.docker_version(),
+        'platform': shakedown.platform_os()
+    }
+
+
 def set_config_defaults(args):
     """ Set configuration defaults
 

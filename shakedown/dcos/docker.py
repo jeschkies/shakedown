@@ -28,7 +28,7 @@ def docker_version(host=None, component='{{.Server.Version}}'):
     else:
         err, output = shakedown.run_command_on_host(host, command, None, None, False)
 
-    return output
+    return output.rstrip()
 
 
 def docker_client_version(host):

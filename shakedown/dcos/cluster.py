@@ -44,6 +44,15 @@ def dcos_version_less_than(version):
     return dcos_canonical_version() < LooseVersion(version)
 
 
+def platform_os(host=None):
+    if host is None:
+        err, output = shakedown.run_command_on_master('uname -rsm', None, None, False)
+    else:
+        err, output = shakedown.run_command_on_host(host, 'uname -rsm', None, None, False)
+
+    return output.rstrip()
+
+
 def required_cpus(cpus, role='*'):
     """ Returns True if the number of available cpus is equal to or greater than
     the cpus.  This is useful in using pytest skipif such as:

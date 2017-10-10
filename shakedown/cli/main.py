@@ -83,8 +83,9 @@ def cli(**args):
         echo(getattr(imported[req], requirements[req]))
 
     if shakedown.attach_cluster(args['dcos_url']):
-        echo('Checking DC/OS cluster version...', d='step-min', n=False)
-        echo(shakedown.dcos_version())
+        echo('Checking cluster environment...', d='step-min')
+        for component, version in get_cluster_environment().items():
+            echo('{}... {}'.format(component, version), d='item-maj')
     else:
         with imported['dcos'].cluster.setup_directory() as temp_path:
             imported['dcos'].cluster.set_attached(temp_path)
@@ -136,8 +137,9 @@ def cli(**args):
                 if authenticated:
                     imported['dcos'].cluster.setup_cluster_config(args['dcos_url'], temp_path, False)
 
-                    echo('Checking DC/OS cluster version...', d='step-min', n=False)
-                    echo(shakedown.dcos_version())
+                    echo('Checking cluster environment...', d='step-min')
+                    for component, version in get_cluster_environment().items():
+                        echo('{}... {}'.format(component, version), d='item-maj')
                 else:
                     click.secho("error: no authentication credentials or token found.", fg='red', bold=True)
                     sys.exit(1)
