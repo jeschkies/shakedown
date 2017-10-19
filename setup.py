@@ -34,12 +34,15 @@ setup(name='dcos-shakedown',
       zip_safe=False,
       install_requires=[
           'click',
-          'dcoscli==0.5.5',
+          'dcoscli',
           'paramiko',
           'pytest',
           'pytest-timeout',
           'retrying',
           'scp'
+      ],
+      dependency_links=[
+          "git+https://github.com/dcos/dcos-cli.git#egg=dcoscli"
       ],
       python_requires='>=3.5',
       entry_points="""

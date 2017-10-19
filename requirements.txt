@@ -1,5 +1,5 @@
 click
-dcoscli
+-e git+https://github.com/dcos/dcos-cli.git#egg=dcoscli
 paramiko
 pytest
 pytest-timeout
