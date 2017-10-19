@@ -41,6 +41,7 @@ setup(name='dcos-shakedown',
           'retrying',
           'scp'
       ],
+      python_requires='>=3.5',
       entry_points="""
       [console_scripts]
       shakedown=shakedown.cli.main:cli
