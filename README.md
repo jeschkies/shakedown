@@ -1,5 +1,3 @@
-Edited in Marathon repo
-
 # Shakedown [![Build Status](http://jenkins.mesosphere.com/service/jenkins/buildStatus/icon?job=public-shakedown-master)](http://jenkins.mesosphere.com/service/jenkins/job/public-shakedown-master/)
 
 DC/OS test harness.
